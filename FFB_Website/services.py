@@ -6,8 +6,10 @@ def get_League(self, league_id, year, espn_s2=None, swid=None):
     self.league_id = league_id
     self.year = year
     url = "http://games.espn.com/ffl/api/v2/"
-    return 1
 
+    # league = League(league_id: self.league_id, year: self.year, espn_s2: str = None, swid: str = None, username: str = None, password: str = None, debug=False)
+
+    return 1
 
 def get_droplets():
     url = 'https://api.digitalocean.com/v2/droplets'
