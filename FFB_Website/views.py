@@ -5,7 +5,7 @@ from django.db import models
 import time
 from espn_api.football import League
 
-from FFB_Website.models import Settings, ff_League
+from FFB_Website.models import Settings, ff_League, Team
 
 
 # Create your views here.
@@ -19,8 +19,6 @@ def home(request):
         pos, team in enumerate(standings)];  
     scoreboard = get_scoreboard_short(league, 4);
     ranking = get_power_rankings(league);
-    # print(league.settings.reg_season_count)
-
     # Add instance of league to database if it doesn't currently exist
     if(not ff_League.objects.filter(year = league.year).exists() and ff_League.objects.filter(league_id = league.league_id)):
         # Add new league obj to database
@@ -32,6 +30,11 @@ def home(request):
         # print(datetime.datetime.fromtimestamp(new_settings.trade_deadline))
         league_settings = Settings(reg_season_count = new_settings.reg_season_count, veto_votes_required = new_settings.veto_votes_required, team_count = new_settings.team_count, playoff_team_count = new_settings.playoff_team_count, keeper_count = new_settings.keeper_count, name = new_settings.name, tie_rule = (None if new_settings.tie_rule == None else 0), league = new_league)
         league_settings.save();
+
+        # Add Teams to database, connected one to one with league
+        for team in league.teams:
+            new_team = Team(team_id = team.team_id, team_abbrev = team.team_abbrev, team_name = team.team_name, division_id = team.division_id, division_name = team.division_name, wins = team.wins, losses = team.losses, ties = team.ties, points_for = team.points_for, points_against = team.points_against, owner = team.owner, streak_type = team.streak_type, streak_length = team.streak_length, standing = team.standing, final_standing = team.final_standing, logo_url = team.logo_url)
+            new_team.save()
 
 
     return render(request, 'home.html', {'league': standings_txt, 'scoreboard': scoreboard, 'ranking': ranking});  # show the page with all the submissions

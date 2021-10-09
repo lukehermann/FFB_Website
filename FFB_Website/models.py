@@ -55,12 +55,12 @@ class Team(models.Model):
     losses = models.IntegerField()
     ties = models.IntegerField()
     points_for = models.IntegerField()
-    points_agaisnt = models.IntegerField()
+    points_against = models.IntegerField()
     owner = models.CharField(max_length=64)
     streak_type = models.CharField(max_length=16)
     streak_length = models.IntegerField()
     standing = models.IntegerField()
-    final_standings = models.IntegerField()
+    final_standing = models.IntegerField()
     logo_url = models.CharField(max_length=256)
 
 
