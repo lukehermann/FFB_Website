@@ -5,7 +5,7 @@ from django.db import models
 import time
 from espn_api.football import League
 
-from FFB_Website.models import Settings, ff_League, Team
+from FFB_Website.models import BoxScore, Settings, ff_League, Team
 
 
 # Create your views here.
@@ -36,8 +36,16 @@ def home(request):
             new_team = Team(team_id = team.team_id, team_abbrev = team.team_abbrev, team_name = team.team_name, division_id = team.division_id, division_name = team.division_name, wins = team.wins, losses = team.losses, ties = team.ties, points_for = team.points_for, points_against = team.points_against, owner = team.owner, streak_type = team.streak_type, streak_length = team.streak_length, standing = team.standing, final_standing = team.final_standing, logo_url = team.logo_url)
             new_team.save()
 
+        for i in range(1, league.current_week):
+            box_scores = league.box_scores(week=i)
+            for box_score in box_scores:
+                print(box_score)
+                new_box_score = BoxScore(home_team = Team.objects.get(team_id = box_score.home_team.team_id), home_score =  box_score.home_score, home_projected = box_score.home_projected, away_team = Team.objects.get(team_id = box_score.away_team.team_id), away_score = box_score.away_score, away_projected = box_score.away_projected)
+                new_box_score.save()
+    score = league.box_scores();
+    print(score[1].home_team.team_name)
 
-    return render(request, 'home.html', {'league': standings_txt, 'scoreboard': scoreboard, 'ranking': ranking});  # show the page with all the submissions
+    return render(request, 'home.html', {'league': standings_txt, 'scoreboard': score, 'ranking': ranking});  # show the page with all the submissions
     # return HttpResponse("Hello, Django!")
 
 

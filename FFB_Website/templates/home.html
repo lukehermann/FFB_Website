@@ -28,6 +28,42 @@
 &nbsp;
 {{ ranking }}
 
+
+{% if scoreboard %}
+   There are {{ scoreboard|length }} records:
+   {% for e in scoreboard %}
+      <td> Preview  Edit  Duplicate  Delete </td>
+      <td> {{ e.home_team.team_name }} </td>
+      <td> {{ e.away_team.team_name }} </td>
+   {% endfor %}
+{% else %}
+   There are no records in the system
+{% endif %}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <!-- {% for k in header %}
+            <th>{{k}}</th>
+            {% endfor %} -->
+            Team 1
+        </tr>
+        <tr>
+            Team 2
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in scoreboard %}
+            <tr>
+                <td>{{r.home_team.team_name}}</td>
+                <td>{{ r.away_team.team_name}}</td>
+                <!-- <td>{{r.chemblid}}</td>
+                <td>{{r.prefName}}</td> -->
+            </tr>
+        {% endfor %}
+    </tbody>
+<!-- 
 <div class="card">
     <div class="text">
         <img src="https://www.shareicon.net/data/512x512/2016/09/15/829452_user_512x512.png" alt="">
@@ -38,7 +74,7 @@
     </div>
 </div>
 </body>
-</html>
+</html> -->
 
 
 <style>
