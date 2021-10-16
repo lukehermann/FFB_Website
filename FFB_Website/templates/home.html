@@ -50,14 +50,18 @@
             Team 1
         </tr>
         <tr>
-            Team 2
+            Points
         </tr>
+        <tr> Team 2 </tr>
+        <tr> Points</tr>
     </thead>
     <tbody>
         {% for r in scoreboard %}
             <tr>
                 <td>{{r.home_team.team_name}}</td>
+                <td> {{ r.home_score}} </td>
                 <td>{{ r.away_team.team_name}}</td>
+                <td> {{ r.away_score}} </td>
                 <!-- <td>{{r.chemblid}}</td>
                 <td>{{r.prefName}}</td> -->
             </tr>

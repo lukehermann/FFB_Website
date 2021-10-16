@@ -46,7 +46,7 @@ class Settings(models.Model):
 
 
 class Team(models.Model):
-    team_id = models.IntegerField()
+    team_id = models.IntegerField(unique=True)
     team_abbrev = models.CharField(max_length=6)
     team_name = models.CharField(max_length=64)
     division_id = models.CharField(max_length=64)
@@ -101,6 +101,7 @@ class Matchup(models.Model):
 # away_score: int
 
 class BoxScore(models.Model):
+    week = models.IntegerField()
     home_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='_home_team')
     home_score = models.IntegerField()
     home_projected = models.IntegerField()
